@@ -49,10 +49,10 @@ class Hop_freeform_search_mcp
 		{
 			if (ee()->config->item('site_id') == $field_data->site_id)
 			{
-				$toolbarButtons = '<div class="toolbar-wrap"><ul class="toolbar">';
-				$toolbarButtons .= '<li class="edit"><a href="'.ee('CP/URL')->make('addons/settings/freeform/edit_field', array('field_id' => $field_data->field_id))->compile().'" title="Edit"></a></li>';
-				$toolbarButtons .= '<li class="copy"><a href="'.ee('CP/URL')->make('addons/settings/freeform/edit_field', array('duplicate_id' => $field_data->field_id))->compile().'" title="Duplicate"></a></li>';
-				$toolbarButtons .= '</ul></div>';
+				$toolbar_buttons = '<div class="toolbar-wrap"><ul class="toolbar">';
+				$toolbar_buttons .= '<li class="edit"><a href="'.ee('CP/URL')->make('addons/settings/freeform/edit_field', array('field_id' => $field_data->field_id))->compile().'" title="Edit"></a></li>';
+				$toolbar_buttons .= '<li class="copy"><a href="'.ee('CP/URL')->make('addons/settings/freeform/edit_field', array('duplicate_id' => $field_data->field_id))->compile().'" title="Duplicate"></a></li>';
+				$toolbar_buttons .= '</ul></div>';
 
 				$fields[] = array(
 					'id'			=> $field_data->field_id,
@@ -62,7 +62,7 @@ class Hop_freeform_search_mcp
 					'type'			=> $field_data->field_type,
 					'edit_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_field', array('field_id' => $field_data->field_id))->compile(),
 					'dup_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_field', array('duplicate_id' => $field_data->field_id))->compile(),
-					'toolbar_buttons' => $toolbarButtons
+					'toolbar_buttons' => $toolbar_buttons
 				);
 			}
 		}
@@ -70,6 +70,47 @@ class Hop_freeform_search_mcp
 		// Send that back as JSON
 		header('Content-Type: application/json');
 		echo json_encode($fields);
+		exit();
+	}
+
+	public function search_forms()
+	{
+		$forms = array();
+		$keywords = ee()->input->get('hfs_keywords');
+
+		$query_forms = ee()->db->select('*')
+			->from('freeform_forms')
+			->like('form_name', $keywords)
+			->or_like('form_label', $keywords)
+			->or_like('form_description', $keywords)
+			->get();
+
+		foreach($query_forms->result() as $form_data)
+		{
+			if (ee()->config->item('site_id') == $form_data->site_id)
+			{
+				$toolbar_buttons = '<div class="toolbar-wrap"><ul class="toolbar">';
+				$toolbar_buttons .= '<li class="edit"><a href="'.ee('CP/URL')->make('addons/settings/freeform/edit_form', array('form_id' => $form_data->form_id))->compile().'" title="Edit"></a></li>';
+				$toolbar_buttons .= '<li class="copy"><a href="'.ee('CP/URL')->make('addons/settings/freeform/edit_form', array('duplicate_id' => $form_data->form_id))->compile().'" title="Duplicate"></a></li>';
+				$toolbar_buttons .= '</ul></div>';
+
+				$forms[] = array(
+					'id'			=> $form_data->form_id,
+					'name'			=> $form_data->form_name,
+					'label'			=> $form_data->form_label,
+					'description'	=> $form_data->form_description,
+					'edit_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_form', array('form_id' => $form_data->form_id))->compile(),
+					'dup_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_form', array('duplicate_id' => $form_data->form_id))->compile(),
+					'subs_link'		=> ee('CP/URL')->make('addons/settings/freeform/entries', array('form_id' => $form_data->form_id))->compile(),
+					'mod_link'		=> ee('CP/URL')->make('addons/settings/freeform/moderate_entries', array('form_id' => $form_data->form_id, 'search_status' => 'pending'))->compile(),
+					'toolbar_buttons' => $toolbar_buttons
+				);
+			}
+		}
+
+		// Send that back as JSON
+		header('Content-Type: application/json');
+		echo json_encode($forms);
 		exit();
 	}
 }
