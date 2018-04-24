@@ -94,11 +94,15 @@ class Hop_freeform_search_mcp
 				$toolbar_buttons .= '<li class="copy"><a href="'.ee('CP/URL')->make('addons/settings/freeform/edit_form', array('duplicate_id' => $form_data->form_id))->compile().'" title="Duplicate"></a></li>';
 				$toolbar_buttons .= '</ul></div>';
 
+				// Get the nb of submissions
+				$nb_submissions = ee()->db->count_all('freeform_form_entries_'.$form_data->form_id);
+
 				$forms[] = array(
 					'id'			=> $form_data->form_id,
 					'name'			=> $form_data->form_name,
 					'label'			=> $form_data->form_label,
 					'description'	=> $form_data->form_description,
+					'nb_subs'		=> $nb_submissions,
 					'edit_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_form', array('form_id' => $form_data->form_id))->compile(),
 					'dup_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_form', array('duplicate_id' => $form_data->form_id))->compile(),
 					'subs_link'		=> ee('CP/URL')->make('addons/settings/freeform/entries', array('form_id' => $form_data->form_id))->compile(),

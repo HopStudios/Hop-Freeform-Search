@@ -44,7 +44,7 @@ function setFormsResultsInTable(forms){
 			var $formLink = $('<a href="'+form.edit_link+'">'+form.label+'</a>');
 			var $formLabel = $('<span></span>').addClass('meta-info').append('<br>').append('— '+form.name);
 			$tdForm.append($formLink).append($formLabel);
-			var $tdSubs = $('<td></td>').append('<a href="'+form.subs_link+'">Submissions</a>');
+			var $tdSubs = $('<td></td>').append('<a href="'+form.subs_link+'">Submissions ('+form.nb_subs+')</a>');
 			var $tdMod = $('<td></td>').append('<a href="'+form.mod_link+'">Moderate</a>');
 			var $tdManage = $('<td></td>').append(form.toolbar_buttons);
 			var $tdCheckbox = $('<td></td>');
