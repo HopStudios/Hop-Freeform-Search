@@ -2,6 +2,15 @@
 
 class Hop_freeform_search_mcp
 {
+	private $field_types = array(
+		'text'				=> 'Text',
+		'textarea'			=> 'Textarea',
+		'multiple_choice'	=> 'Multiple Choice Question',
+		'select'			=> 'Select',
+		'playa'				=> 'Playa',
+		'freeform_teleclass'=> 'Teleclass',
+	);
+
 	public function index()
 	{
 
@@ -60,6 +69,7 @@ class Hop_freeform_search_mcp
 					'label'			=> $field_data->field_label,
 					'description'	=> $field_data->field_description,
 					'type'			=> $field_data->field_type,
+					'type_label'	=> array_key_exists($field_data->field_type, $this->field_types)?$this->field_types[$field_data->field_type]:$field_data->field_type,
 					'edit_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_field', array('field_id' => $field_data->field_id))->compile(),
 					'dup_link'		=> ee('CP/URL')->make('addons/settings/freeform/edit_field', array('duplicate_id' => $field_data->field_id))->compile(),
 					'toolbar_buttons' => $toolbar_buttons

@@ -14,7 +14,7 @@ function setFieldsResultsInTable(fields){
 			var $fieldLink = $('<a href="'+field.edit_link+'">'+field.label+'</a>');
 			var $fieldLabel = $('<span></span>').addClass('meta-info').append('<br>').append('— '+field.name);
 			$tdField.append($fieldLink).append($fieldLabel);
-			var $tdType = $('<td>t</td>');
+			var $tdType = $('<td></td>').append(field.type_label);
 			var $tdDescription = $('<td></td>').append(field.description);
 			var $tdManage = $('<td></td>').append(field.toolbar_buttons);
 			var $tdCheckbox = $('<td></td>');
