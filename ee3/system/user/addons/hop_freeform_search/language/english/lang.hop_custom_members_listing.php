@@ -4,8 +4,8 @@ $lang = array(
 
 // Required for MODULES page
 
-'hop_custom_members_listing_module_name'  => 'Hop Custom Members Listing',
-'hop_custom_members_listing_module_description'  => 'Display custom data in Members listing',
+'hop_freeform_search_module_name'  => 'Hop Freeform Search',
+'hop_freeform_search_module_description'  => 'Add search feature in Freeform forms and Freeform fields',
 
 //----------------------------------------
 
